@@ -100,22 +100,23 @@ VALUES
 
 
 CREATE TABLE profesores_libros(
+	prestamo_id SERIAL NOT NULL,
 	profesor_id VARCHAR(11) REFERENCES profesores(profesor_id),
 	libro_id INTEGER REFERENCES libros(libro_id),
 	fecha_prestamo DATE NOT NULL,
-	PRIMARY KEY (profesor_id,libro_id,fecha_prestamo) 
+	PRIMARY KEY (profesor_id,libro_id,prestamo_id) 
 );
 
-INSERT INTO profesores_libros
+INSERT INTO profesores_libros (profesor_id,libro_id,fecha_prestamo)
 VALUES
-	('10',1,'2016/02/28'),
-	('10',2,'2016/03/01'),
-	('11',3,'2016/02/28'),
-	('11',1,'2016/03/01'),
-	('12',1,'2016/02/28'),
-	('12',4,'2016/03/28'),
-	('13',4,'2016/02/28'),
-	('13',1,'2016/03/28');
+	('10',1,'2006/09/09'),
+	('10',2,'2005/05/05'),
+	('11',3,'2005/05/05'),
+	('11',1,'2005/05/06'),
+	('12',1,'2005/05/06'),
+	('12',4,'2006/09/09'),
+	('13',4,'2006/12/18'),
+	('13',1,'2005/05/06');
 
 
 ###SECCIÓN DE CONSULTAS###
@@ -128,10 +129,42 @@ SELECT profesores.primer_nombre,profesores.primer_apellido,colegios.nombre
 FROM profesores,colegios,aulas
 WHERE colegios.colegio_id=2 AND colegios.colegio_id=aulas.colegio_id AND profesores.aula_id=aulas.aula_id;
 
-SELECT profesores.primer_nombre, asignaturas.nombre
+SELECT profesores.primer_nombre, profesores.primer_apellido, asignaturas.nombre
 FROM profesores, asignaturas, profesores_asignaturas
 WHERE profesores_asignaturas.profesor_id='10' AND profesores_asignaturas.asignatura_id=asignaturas.asignatura_id AND profesores_asignaturas.profesor_id=profesores.profesor_id; 
 
 SELECT profesores.primer_nombre, profesores.primer_apellido
 FROM profesores
 WHERE primer_nombre LIKE 'A%';
+
+#TALLER OCTUBRE#S
+
+SELECT asignaturas.nombre, asignaturas.asignatura_id, asignaturas.curso
+FROM asignaturas
+WHERE curso='1' ORDER BY nombre;
+
+SELECT profesores.primer_nombre, profesores.profesor_id
+FROM profesores
+WHERE profesores.aula_id='1.A01' ORDER BY profesores.primer_nombre;
+
+#este esta masomenos#
+SELECT profesores.primer_nombre, profesores.primer_apellido, asignaturas.nombre
+FROM profesores, asignaturas, profesores_asignaturas
+WHERE asignaturas.curso='1' AND profesores_asignaturas.asignatura_id=asignaturas.asignatura_id AND profesores_asignaturas.profesor_id=profesores.profesor_id;
+
+SELECT profesores.primer_nombre, profesores.primer_apellido, libros.nombre
+FROM profesores, libros, profesores_libros
+WHERE profesores_libros.libro_id=1 AND profesores_libros.profesor_id=profesores.profesor_id AND profesores_libros.libro_id=libros.libro_id;
+
+SELECT profesores.primer_nombre,profesores.primer_apellido,colegios.nombre
+FROM profesores,colegios,aulas
+WHERE colegios.colegio_id=1 AND colegios.colegio_id=aulas.colegio_id AND profesores.aula_id=aulas.aula_id;
+
+SELECT libros.nombre, editoriales.nombre
+FROM libros, editoriales
+WHERE libros.editorial_id=1 AND libros.editorial_id=editoriales.editorial_id;
+
+SELECT profesores.primer_nombre, profesores.primer_apellido, libros.nombre, fecha_prestamo
+FROM profesores, libros, profesores_libros
+WHERE fecha_prestamo='2006/09/09' AND profesores_libros.profesor_id=profesores.profesor_id AND profesores_libros.libro_id=libros.libro_id;
+
