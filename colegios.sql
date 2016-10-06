@@ -118,6 +118,27 @@ VALUES
 	('13',4,'2006/12/18'),
 	('13',1,'2005/05/06');
 
+CREATE TABLE alumnos_fusa(
+	alumno_id VARCHAR(8) PRIMARY KEY NOT NULL,
+	primer_nombre VARCHAR(20) NOT NULL,
+	primer_apellido VARCHAR(20) NOT NULL,
+	fecha_alumno DATE NOT NULL
+);
+
+INSERT INTO alumnos_fusa
+VALUES
+	('1','YOJAN','PARDO','2014/06/30'),
+
+CREATE TABLE alumnos_soacha(
+	alumno_id VARCHAR(8) PRIMARY KEY NOT NULL,
+	primer_nombre VARCHAR(20) NOT NULL,
+	primer_apellido VARCHAR(20) NOT NULL,
+	fecha_alumno DATE NOT NULL
+);
+
+INSERT INTO alumnos_soacha(
+	(),
+);
 
 ###SECCIÓN DE CONSULTAS###
 
@@ -148,9 +169,10 @@ FROM profesores
 WHERE profesores.aula_id='1.A01' ORDER BY profesores.primer_nombre;
 
 #este esta masomenos#
-SELECT profesores.primer_nombre, profesores.primer_apellido, asignaturas.nombre
+SELECT profesores.primer_nombre, profesores.primer_apellido
 FROM profesores, asignaturas, profesores_asignaturas
-WHERE asignaturas.curso='1' AND profesores_asignaturas.asignatura_id=asignaturas.asignatura_id AND profesores_asignaturas.profesor_id=profesores.profesor_id;
+WHERE asignaturas.curso='1' AND profesores_asignaturas.asignatura_id=asignaturas.asignatura_id
+AND profesores_asignaturas.profesor_id=profesores.profesor_id;
 
 SELECT profesores.primer_nombre, profesores.primer_apellido, libros.nombre
 FROM profesores, libros, profesores_libros
@@ -167,4 +189,12 @@ WHERE libros.editorial_id=1 AND libros.editorial_id=editoriales.editorial_id;
 SELECT profesores.primer_nombre, profesores.primer_apellido, libros.nombre, fecha_prestamo
 FROM profesores, libros, profesores_libros
 WHERE fecha_prestamo='2006/09/09' AND profesores_libros.profesor_id=profesores.profesor_id AND profesores_libros.libro_id=libros.libro_id;
+
+#consultas con union except intersect#
+
+
+
+
+
+#tarea: listar el codigo de aula que no tiene ningun profesor asignado. 2. listar el codigo del aula, capacidad ubicación de las aulas sin profesor asignado. 3. listar codigo y titulo del libro que nunca han sido prestados. 4. investigar funciones de agregado
 
