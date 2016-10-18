@@ -192,7 +192,15 @@ WHERE fecha_prestamo='2006/09/09' AND profesores_libros.profesor_id=profesores.p
 
 #consultas con union except intersect#
 
+SELECT colegios.nombre, profesores.primer_nombre 
+FROM colegios
+INNER JOIN aulas
+ON colegios.colegio_id=aulas.colegio_id INNER JOIN profesores ON aulas.aula_id=profesores.aula_id
+WHERE profesores.primer_nombre='ALICIA';
 
+SELECT colegios.nombre, profesores.primer_nombre
+FROM colegios, aulas, profesores
+WHERE colegios.colegio_id=aulas.colegio_id AND aulas.aula_id=profesores.aula_id AND profesores.primer_nombre='ALICIA';
 
 
 
